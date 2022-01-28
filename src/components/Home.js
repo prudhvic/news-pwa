@@ -4,25 +4,24 @@ import { useState, useEffect } from "react";
 const Home = () => {
   let [News, setNews] = useState([]);
   let [query, setQuery] = useState("usa");
-    let [search, setSearch] = useState("");
-    let [isLoading,setIsLoading]=useState(true)
+  let [search, setSearch] = useState("");
+  let [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-     
-      let url=`https://newsapi.org/v2/everything?q=${query}&from=2021-07-20&to=2021-07-22&sortBy=popularity&apiKey=48ea256b9eca48698443fd521a86edc0`
+    let url = `https://newsapi.org/v2/everything?q=${query}&from=2022-1-1&to=2022-1-25&sortBy=popularity&apiKey=7c7d06ab74434931956cfd7bcd993199`;
     fetch(url)
       .then((response) => {
         return response.json();
       })
       .then((news) => {
-          setNews(news.articles);
-          setIsLoading(false)
+        setNews(news.articles);
+        setIsLoading(false);
       });
   }, [query]);
   function handleSubmit(e) {
-      e.preventDefault();
-      if (!search) {
-          alert("please enter something")
-      }
+    e.preventDefault();
+    if (!search) {
+      alert("please enter something");
+    }
     setQuery(search);
     setSearch("");
   }
@@ -36,12 +35,10 @@ const Home = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <button onClick={handleSubmit}>Search</button>
-          </form>
-          {isLoading?<h1 className="loader">Loading...</h1>:""}
+      </form>
+      {isLoading ? <h1 className="loader">Loading...</h1> : ""}
       <div className="grid">
-        {News && News.map((article) => (
-          <Articles article={article} />
-        ))}
+        {News && News.map((article) => <Articles article={article} />)}
       </div>
     </div>
   );

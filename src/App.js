@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
 import Navbar from "./Navbar";
@@ -8,22 +8,15 @@ import Tech from "./components/Tech";
 function App() {
   return (
     <>
-      <Navbar/>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-        <Route path="/sports">
-          <Sports />
-        </Route>
-        <Route path="/cinema">
-          <Cinema />
-        </Route>
-        <Route path="/technews">
-          <Tech />
-        </Route>
-      </Switch>
+        <Route path="/sports" element={<Sports />} />
+
+        <Route path="/cinema" element={<Cinema />} />
+        <Route path="/technews" element={<Tech />} />
+      </Routes>
     </>
   );
 }
