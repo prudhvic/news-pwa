@@ -1,6 +1,8 @@
 {
   "short_name": "News stream",
-  "name": "Create React App Sample",
+  "name": "news app",
+  "start_url": "./",
+  "scope": "./",
   "icons": [
     {
       "src": "./news.png",
@@ -8,7 +10,6 @@
       "type": "image/png"
     }
   ],
-  "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

@@ -22,7 +22,7 @@ const Cinema = () => {
       {isLoading ? <h1 className="loader">Loading...</h1> : ""}
       <div className="grid">
         {News.map((article) => (
-          <Articles article={article} />
+          <Articles article={article} key={Math.random() * 100} />
         ))}
       </div>
     </div>

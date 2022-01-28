@@ -3,7 +3,7 @@ import Articles from "./Articles";
 import { useState, useEffect } from "react";
 const Home = () => {
   let [News, setNews] = useState([]);
-  let [query, setQuery] = useState("usa");
+  let [query, setQuery] = useState("nft");
   let [search, setSearch] = useState("");
   let [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -38,7 +38,9 @@ const Home = () => {
       </form>
       {isLoading ? <h1 className="loader">Loading...</h1> : ""}
       <div className="grid">
-        {News && News.map((article) => <Articles article={article} />)}
+        {News.map((article) => (
+          <Articles article={article} key={Math.random() * 100} />
+        ))}
       </div>
     </div>
   );

@@ -1,27 +1,42 @@
-let urlsToCache = ["index.html"];
-let self = window;
+const CACHE_NAME = "version-1";
+const urlsToCache = ["index.html"];
+
+const self = this;
+
+// Install SW
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open("newsAssets").then((cache) => {
+    caches.open(CACHE_NAME).then((cache) => {
       console.log("Opened cache");
 
       return cache.addAll(urlsToCache);
     })
   );
 });
+
+// Listen for requests
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      // Even if the response is in the cache, we fetch it
-      // and update the cache for future usage
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
-        caches.open("newsAssets").then((cache) => {
-          cache.put(event.request, networkResponse.clone());
-          return networkResponse;
-        });
-      });
-      // We use the currently cached version if it's there
-      return cachedResponse || fetchPromise; // cached or a network fetch
+    caches.match(event.request).then(() => {
+      return fetch(event.request).catch(() => caches.match("offline.html"));
     })
+  );
+});
+
+// Activate the SW
+self.addEventListener("activate", (event) => {
+  const cacheWhitelist = [];
+  cacheWhitelist.push(CACHE_NAME);
+
+  event.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cacheName) => {
+          if (!cacheWhitelist.includes(cacheName)) {
+            return caches.delete(cacheName);
+          }
+        })
+      )
+    )
   );
 });
